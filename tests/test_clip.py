@@ -35,3 +35,15 @@ def test_clip_array_floats(arr, amin, amax):
     assert result.shape == arr.shape
     expected = np.maximum(amin, np.minimum(arr, amax))
     assert_equal(result, expected)
+
+# next, mix floats and ints & scalars & arrays
+@given(hynp.arrays(np.int64, 10),
+       st.floats(),
+       hynp.arrays(np.int32, 10),
+       )
+def test_clip_mixed_arr_scalar(arr, amin, amax):
+    result = np.clip(arr, amin, amax)
+    # preserve shape on clip
+    assert result.shape == arr.shape
+    expected = np.maximum(amin, np.minimum(arr, amax))
+    assert_equal(result, expected)

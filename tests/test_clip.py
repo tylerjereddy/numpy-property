@@ -54,9 +54,7 @@ def test_clip_mixed_arr_scalar(arr, amin, amax):
        st.integers(),
        )
 def test_clip_timedelta64(arr, amin, amax):
-    arr = np.array(arr.tolist(), dtype='m8[s]')
-    amin = np.array(amin, 'm8[s]')
-    amax = np.array(amax, 'm8[s]')
+    arr = np.array(arr.tolist(), dtype='m8')
     result = np.clip(arr, amin, amax)
     # preserve shape on clip
     assert result.shape == arr.shape

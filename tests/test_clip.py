@@ -47,3 +47,19 @@ def test_clip_mixed_arr_scalar(arr, amin, amax):
     assert result.shape == arr.shape
     expected = np.maximum(amin, np.minimum(arr, amax))
     assert_equal(result, expected)
+
+# try datetime64 clipping
+@given(hynp.arrays(np.int64, 10),
+       st.integers(),
+       st.integers(),
+       )
+def test_clip_timedelta64(arr, amin, amax):
+    arr = np.array(arr.tolist(), dtype='m8[s]')
+    amin = np.array(amin, 'm8[s]')
+    amax = np.array(amax, 'm8[s]')
+    result = np.clip(arr, amin, amax)
+    # preserve shape on clip
+    assert result.shape == arr.shape
+    # the usual equivalence condition for clip()
+    expected = np.maximum(amin, np.minimum(arr, amax))
+    assert_equal(result, expected)

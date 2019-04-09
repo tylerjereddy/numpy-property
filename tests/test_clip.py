@@ -50,8 +50,10 @@ def test_clip_mixed_arr_scalar(arr, amin, amax):
 
 # try datetime64 clipping
 @given(hynp.arrays(np.int64, 10),
-       st.integers(),
-       st.integers(),
+       st.integers(min_value=np.iinfo(np.int64).min,
+                   max_value=np.iinfo(np.int64).max),
+       st.integers(min_value=np.iinfo(np.int64).min,
+                   max_value=np.iinfo(np.int64).max),
        )
 def test_clip_timedelta64(arr, amin, amax):
     arr = np.array(arr.tolist(), dtype='m8')

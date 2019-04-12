@@ -17,7 +17,7 @@ def test_clip_scalar_ints(arr, amin, amax):
     # instead, we test for the property described
     # in numpy/core/code_generators/ufunc_docstrings.py
     # see also: related discussion in NumPy gh-12519
-    expected = np.maximum(amin, np.minimum(arr, amax))
+    expected = np.minimum(amax, np.maximum(arr, amin))
     # we also have to convert to lists for the comparison
     # here because we can have object type in output
     # which causes issues
@@ -33,7 +33,7 @@ def test_clip_array_floats(arr, amin, amax):
     result = np.clip(arr, amin, amax)
     # preserve shape on clip
     assert result.shape == arr.shape
-    expected = np.maximum(amin, np.minimum(arr, amax))
+    expected = np.minimum(amax, np.maximum(arr, amin))
     assert_equal(result, expected)
 
 # next, mix floats and ints & scalars & arrays
@@ -45,7 +45,7 @@ def test_clip_mixed_arr_scalar(arr, amin, amax):
     result = np.clip(arr, amin, amax)
     # preserve shape on clip
     assert result.shape == arr.shape
-    expected = np.maximum(amin, np.minimum(arr, amax))
+    expected = np.minimum(amax, np.maximum(arr, amin))
     assert_equal(result, expected)
 
 # try datetime64 clipping
@@ -61,5 +61,5 @@ def test_clip_timedelta64(arr, amin, amax):
     # preserve shape on clip
     assert result.shape == arr.shape
     # the usual equivalence condition for clip()
-    expected = np.maximum(amin, np.minimum(arr, amax))
+    expected = np.minimum(amax, np.maximum(arr, amin))
     assert_equal(result, expected)
